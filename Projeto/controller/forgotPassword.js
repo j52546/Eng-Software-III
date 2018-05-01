@@ -33,8 +33,7 @@ const postPassword = (req, res) => {
         res.locals.success = true
         res.render('auth/forgotPassword')
    } else {
-        res.locals.error = true
-        res.render('auth/forgotPassword')
+        res.redirect('/recuperar-senha')
    }
 }
 
