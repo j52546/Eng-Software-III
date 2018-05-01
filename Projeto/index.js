@@ -5,7 +5,10 @@ const PORT = process.env.PORT || 3000
 const session = require("express-session")
 
 // import the routes
-const login = require('./routes/index')
+const login = require('./routes/login')
+const home = require('./routes/home')
+const forgotPassword = require('./routes/forgotPassword')
+const register = require('./routes/register')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: true}))
@@ -15,8 +18,10 @@ app.use(session({
     saveUninitialized: true
 }))
 app.set('view engine', 'ejs')
-
-app.use('/', login)
+app.use('/', home)
+app.use('/login', login)
+app.use('/recuperar-senha', forgotPassword)
+app.use('/register', register)
 app.use('*', function(req, res) {
     res.status(404)
     res.render('notFound')

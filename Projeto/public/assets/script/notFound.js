@@ -11,7 +11,7 @@ function redirectPageAfterFiveSeconds(time){
     let clearTime = setTimeout(() => {
         if(time === 0) {
             clearTimeout(clearTime)
-            window.location.href = '/'
+            window.location.href = '/login'
         } else {
             document.getElementById('time_redirect').innerText = --time
             redirectPageAfterFiveSeconds(time)
