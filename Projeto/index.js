@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000
 const session = require("express-session")
+const mysql = require('./model/connection_mysql')
 
 // import the routes
 const login = require('./routes/login')
@@ -26,11 +27,17 @@ app.use('*', function(req, res) {
     res.status(404)
     res.render('notFound')
 })
-app.listen(PORT, err => {
-    if( err ){
-        console.log('ERROR TO START SERVER ', err)
-    } else {
-        console.log('listen to serve on port ', PORT)
-    }
+
+mysql.connection.then(() => {
+    app.listen(PORT, err => {
+        if( err ){
+            console.log('ERROR TO START SERVER ', err)
+        } else {
+            console.log('listen to serve on port ', PORT)
+        }
+    })
+}).catch(err => {
+    console.log('Error to start the database, error =  ', err)
 })
+
 
