@@ -19,6 +19,17 @@
           <a class="d-block small" href="/recuperar-senha">Forgot Password?</a>
         </div>
       </div>
+      <% if('successToCreateAccount' in locals) {%>
+        <div class="alert alert-primary" id="successCreateAccount" role="alert">
+          Aguarde que seu cadastro seja aprovado.
+        </div>
+
+        <script>
+          setTimeout(() => {
+            $('#successCreateAccount').hide(500)
+          }, 5000)
+        </script> 
+      <%}%>
     </div>
   </div>
 <% include ../partials/footer %>

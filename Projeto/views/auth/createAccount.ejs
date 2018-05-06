@@ -8,11 +8,11 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">First name</label>
-                <input name="name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                <input required name="name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">Last name</label>
-                <input name="lastName" class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                <input required name="lastName" class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
               </div>
             </div>
           </div>
@@ -21,29 +21,34 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="userCpf">Cpf</label>
-                <input name="cpf" class="form-control" id="userCpf" type="text" aria-describedby="nameHelp" placeholder="Enter your cpf">
+                <input required name="cpf" class="form-control" id="userCpf" type="text" aria-describedby="nameHelp" placeholder="Enter your cpf">
               </div>
               <div class="col-md-6">
                 <label for="userTel">Telephone number</label>
-                <input name="telephone" maxlength="15" class="form-control" id="userTel" type="text" aria-describedby="nameHelp" placeholder="Enter your telephone number">
+                <input required name="telephone" maxlength="15" class="form-control" id="userTel" type="text" aria-describedby="nameHelp" placeholder="Enter your telephone number">
               </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input name="email" class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+            <input required name="email" class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
-                <label for="exampleInputPassword1">Password</label>
-                <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                <label for="password">Password</label>
+                <input required name="password" class="form-control" id="password" type="password" placeholder="Password">
               </div>
               <div class="col-md-6">
-                <label for="exampleConfirmPassword">Confirm password</label>
-                <input name="confirm_password" class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
+                <label for="confirmPassword">Confirm password</label>
+                <input required name="confirm_password" class="form-control" id="confirmPassword" type="password" placeholder="Confirm password">
               </div>
+            </div>
+          </div>
+          <div class="form-row" id="password_diferent">
+            <div class="alert alert-danger" style="width:100%">
+              <strong>Error!</strong> Senhas diferentes
             </div>
           </div>
           <button type="submit" form="form_register" class="btn btn-primary btn-block">Register</button>
@@ -53,8 +58,30 @@
           <a class="d-block small" href="/recuperar-senha">Forgot Password?</a>
         </div>
       </div>
+
+      <%if('errorToCreateAccount' in locals) {%>
+        <div class="alert alert-danger" id="errorToCreateAccount" role="alert">
+            Error no servidor, tente novamente mais tarde!
+        </div>
+        <script>
+          setTimeout(() => {
+            $('#errorToCreateAccount').hide(500)
+          }, 5000)
+        </script>
+      <%}%>
+
+      <%if('KEY_DRUP' in locals) {%>
+        <div class="alert alert-danger" id="errorToCreateAccount" role="alert">
+           Usuário já cadastrado!
+        </div>
+        <script>
+          setTimeout(() => {
+            $('#errorToCreateAccount').hide(500)
+          }, 5000)
+        </script>
+      <%}%>
     </div>
   </div>
 
-  <script src="/assets/script/createAccount.js"></script>
+  <script src="/assets/script/createAccount/createAccount.js"></script>
 <% include ../partials/footer %>
