@@ -21,5 +21,6 @@ function afterSubmit() {
 $(function() {
     $('#button_card_success').on('click', function() {
         $('#button_card_success').parent().hide()
+        window.location.href='/recuperar-senha'
     })
 })

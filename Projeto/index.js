@@ -19,6 +19,12 @@ app.use(session({
     saveUninitialized: true
 }))
 app.set('view engine', 'ejs')
+app.use(function(req, res, next) {
+    if('user' in req.session) {
+        res.locals.user = req.session.user
+    }
+    next()
+})
 app.use('/', home)
 app.use('/login', login)
 app.use('/recuperar-senha', forgotPassword)
