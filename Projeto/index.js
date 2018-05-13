@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000
+const CONSTANTS = require('./util/CONSTANTS.JS')
+CONSTANTS.PORT_ON_SERVER = PORT
 const session = require("express-session")
 const mysql = require('./model/connection_mysql')
 
@@ -11,13 +13,13 @@ const home = require('./routes/home')
 const forgotPassword = require('./routes/forgotPassword')
 const register = require('./routes/register')
 
-app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
     secret:'Trabalho Marcio',
     resave: false,
     saveUninitialized: true
 }))
+app.use('/static',express.static('public'))
 app.set('view engine', 'ejs')
 app.use(function(req, res, next) {
     if('user' in req.session) {
@@ -26,12 +28,12 @@ app.use(function(req, res, next) {
     next()
 })
 app.use('/', home)
-app.use('/login', login)
+app.use('/login',login)
 app.use('/recuperar-senha', forgotPassword)
 app.use('/register', register)
-app.use('*', function(req, res) {
+app.use('*',(req, res) => {
     res.status(404)
-    res.render('notFound')
+    res.render('notFound') 
 })
 
 mysql.connection.then(() => {
