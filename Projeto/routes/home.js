@@ -3,9 +3,9 @@ const router = express.Router()
 
 const indexController = require('../controller/index')
 
-router.get('/', function(req, res, next) {
+router.use(function(req, res, next) {
     if('user' in req.session) {
-        return next()
+        next()
     } else {
         res.redirect('/login')
     }

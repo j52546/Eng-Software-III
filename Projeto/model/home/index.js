@@ -16,7 +16,10 @@ const updateAccount = async user => {
     const connection = await pool.getConnection()
     return connection.execute(sql, [user.ROLE, user.COD])
     .then(result=>result)
-    .catch(error=> { throw new Error(error) })
+    .catch(error=> { 
+        connection.rollback()
+        throw new Error(error) 
+    })
 }
 
 module.exports = {
