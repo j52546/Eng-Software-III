@@ -7,8 +7,9 @@
 .margin_form {
     margin:1rem !important
 }
-.footer.sticky-footer {
-    height: 8vh;    
+.sticky-footer {
+    height: 8vh;
+    font-size:1.5em    
 }
 .hideDiv{
     display: none

@@ -1,5 +1,6 @@
 const homeDAO = require('../../model/home/index')
 const CONSTANTS = require('../../util/CONSTANTS.JS')
+const clientDAO = require('../../model/client/clientDAO')
 
 const renderPage = (req, res) => {
     if(req.session.user.role.toUpperCase() === CONSTANTS.ROLES.MANAGER.toUpperCase()) {
@@ -20,7 +21,26 @@ const renderPage = (req, res) => {
 
 }
 
+const createClient = (req, res) => {
+    clientDAO.saveClient(req.body)
+    .then(result => {
+        console.log('RESULT = ', result)
+        res.locals.successRegisterClient = true
+        res.render('cadastre/client')
+    })
+    .catch( err => {
+        if(err.code === 'ER_DUP_ENTRY') {
+            res.locals.clientAlreadyExist = true
+            res.render('cadastre/client')
+        } else {
+            res.locals.errorSaveClient = true
+            res.render('cadastre/client')
+        }
+    })    
+}
+
 
 module.exports = {
-    renderPage
+    renderPage,
+    createClient
 }

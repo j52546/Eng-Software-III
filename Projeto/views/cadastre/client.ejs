@@ -7,11 +7,11 @@
         <h1 style="text-align:center">Cadastro de Cliente</h1>
 
         <div style="margin:10px;">
-        <form id="form_client" method="POST" action="/create/account">
+        <form id="form_client" method="POST" action="/create/client">
         <div class="form-group row">
         <label for="example-text-input" class="col-2 col-form-label">Nome</label>
         <div class="col-10">
-          <input required class="form-control" minlength="6" maxlength="40" name="nome" type="text" placeholder="Informe nome" id="nome">
+          <input required class="form-control" minlength="6" maxlength="40" name="nome" type="text" placeholder="Informe nome completo" id="nome">
           <div style="font-size:1em" id="nome_error" class="invalid-feedback hideDiv">
              Não é permitido menos que 6 caracteres
           </div>  
@@ -22,13 +22,13 @@
         <div class="col-10">
             <div class="form-check">
                   <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="pessoa" id="pessoa_fisica" value="option1" checked>
+                        <input class="form-check-input" type="radio" name="pessoa" id="pessoa_fisica" value="F" checked>
                               Físico
                         </label>
                         </div>
                         <div class="form-check">
                         <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="pessoa" id="pessoa_juridica" value="option2">
+                        <input class="form-check-input" type="radio" name="pessoa" id="pessoa_juridica" value="J">
                               Jurídico
                   </label>
             </div>

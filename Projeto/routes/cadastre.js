@@ -10,5 +10,6 @@ router.use(function(req, res, next) {
 })
 
 router.get('/client', clientController.renderPage)
+router.post('/client', clientController.createClient)
 
 module.exports = router

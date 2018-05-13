@@ -29,3 +29,79 @@
 
 <%}) %>
 <%} %>
+
+<%if('clientAlreadyExist' in locals && locals.clientAlreadyExist){%>
+<div class="modal fade" id="clientAlreadyExist" tabindex="0" role="dialog" aria-labelledby="label" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="label">Aviso</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">Cliente já está cadastrado</div>
+    <div class="modal-footer">
+      <button data-dismiss="modal" id="btnHideModal" class="btn btn-primary">Ok</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  $('#clientAlreadyExist').modal('show')
+  setTimeout(()=>{
+    $('#btnHideModal').trigger('click')
+  }, 10000)
+</script>
+<%}%>
+
+<%if('errorSaveClient' in locals && locals.errorSaveClient){%>
+<div class="modal fade" id="errorSaveClient" tabindex="0" role="dialog" aria-labelledby="label" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="label">Aviso</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">Erro ao salvar cliente</div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="btnHideModalError" data-dismiss="modal">Ok</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  $('#errorSaveClient').modal('show')
+  setTimeout(()=>{
+    $('#btnHideModalError').trigger('click')
+  }, 10000)
+</script>
+<%}%>
+
+
+<%if('successRegisterClient' in locals && locals.successRegisterClient){%>
+<div class="modal fade" id="successRegisterClient" tabindex="0" role="dialog" aria-labelledby="label" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="label">Aviso</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body" style="color:#31B006">Cliente salvo com sucesso</div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="btnHideModalSucess" data-dismiss="modal">Ok</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  $('#successRegisterClient').modal('show')
+  setTimeout(()=>{
+    $('#btnHideModalSucess').trigger('click')
+  }, 10000)
+</script>
+<%}%>
