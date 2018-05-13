@@ -1,4 +1,12 @@
 .content-wrapper {
     padding-top:4rem;
     padding-left:10px;
+    height:92vh
+}
+
+.margin_form {
+    margin:1rem !important
+}
+.footer.sticky-footer {
+    height: 8vh;    
 }

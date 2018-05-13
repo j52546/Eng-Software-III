@@ -9,7 +9,7 @@ function openModal(element) {
 function updateAccount(element) {
     element.ROLE = document.getElementById(element.DOCIND).value
    $.ajax({
-       url:'atualizar_conta',
+       url:'/atualizar_conta',
        method:'POST',
        data: element,
        timeout:10000,
