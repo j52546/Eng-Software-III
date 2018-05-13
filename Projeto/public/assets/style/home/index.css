@@ -10,3 +10,6 @@
 .footer.sticky-footer {
     height: 8vh;    
 }
+.hideDiv{
+    display: none
+}
