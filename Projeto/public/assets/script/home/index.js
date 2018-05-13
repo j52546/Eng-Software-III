@@ -1,6 +1,6 @@
 $(function(){
     start()
-    setTimeout(start, 1000)
+    setInterval(start, 1000)
 })
 
 function start(){
