@@ -43,7 +43,6 @@ const postPassword = (req, res) => {
                 res.locals.success = true
                 res.render('auth/forgotPassword')
             } else {
-                console.log('else, ')
                 res.locals.errorForgotAccount = true
                 res.render('auth/forgotPassword')
             }

@@ -48,10 +48,12 @@
 </div>
 </div>
 <script>
-  $('#clientAlreadyExist').modal('show')
-  setTimeout(()=>{
-    $('#btnHideModal').trigger('click')
-  }, 10000)
+  $(function(){
+      $('#clientAlreadyExist').modal('show')
+      setTimeout(()=>{
+        $('#btnHideModal').trigger('click')
+      }, 10000)
+  })
 </script>
 <%}%>
 
@@ -73,10 +75,12 @@
 </div>
 </div>
 <script>
-  $('#errorSaveClient').modal('show')
+  $(function(){
+    $('#errorSaveClient').modal('show')
   setTimeout(()=>{
     $('#btnHideModalError').trigger('click')
   }, 10000)
+  })
 </script>
 <%}%>
 
@@ -99,9 +103,11 @@
 </div>
 </div>
 <script>
-  $('#successRegisterClient').modal('show')
+  $(function(){
+    $('#successRegisterClient').modal('show')
   setTimeout(()=>{
     $('#btnHideModalSucess').trigger('click')
   }, 10000)
+  })
 </script>
 <%}%>
