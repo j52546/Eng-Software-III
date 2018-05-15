@@ -25,7 +25,6 @@ app.use('/static',express.static('public'))
 app.set('view engine', 'ejs')
 app.use(function(req, res, next) {
     if('user' in req.session) {
-        console.log(req.session)
         res.locals.user = req.session.user
     }
     next()
