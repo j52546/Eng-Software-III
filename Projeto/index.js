@@ -14,6 +14,7 @@ const forgotPassword = require('./routes/forgotPassword')
 const register = require('./routes/register')
 const logout = require('./routes/logout')
 const create = require('./routes/cadastre')
+const list = require('./routes/lists')
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
@@ -34,6 +35,7 @@ app.use('/recuperar-senha', forgotPassword)
 app.use('/register', register)
 app.use('/logout', logout)
 app.use('/create', create)
+app.use('/list', list)
 app.use('/', home)
 app.use('*',(req, res) => {
     res.status(404)
