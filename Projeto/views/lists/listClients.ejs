@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 <% include ../partials/navBar %>
       <div class="content-wrapper">
-<% include ../partials/modalRegisterPoveyor %>
+<% include ../partials/modalAcceptAccount %>
          <!-- /.container-fluid-->
         <!-- /.content-wrapper-->
         <h1 style="text-align:center">Lista de Fornecedor</h1>
@@ -28,8 +28,8 @@
                 </tr>
               </tfoot>
               <tbody>
-              <% if('purveyors' in locals && locals.purveyors.length > 0){%>
-                  <% locals.purveyors.map(content => {%>
+              <% if('allClients' in locals && locals.allClients.length > 0){%>
+                  <% locals.allClients.map(content => {%>
                     <tr>
                       <td><%= content.NOME %></td>
                       <td><%= content.EMAIL %></td>

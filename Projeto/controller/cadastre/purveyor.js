@@ -49,9 +49,8 @@ const getPurveyors = (req,res) => {
         if(result && result[0].length > 0) {
             res.locals.users = users
             res.locals.purveyors = result[0]
-            console.log(result[0])
-        }
-        res.render('fornecedor/listaFornecedores')
+       }
+        res.render('lists/listaFornecedores')
     })
     .catch( err => {
         console.log('ERROR: ', err)
@@ -59,8 +58,29 @@ const getPurveyors = (req,res) => {
     })
 }
 
+const findPurveyor = (req, res) => {
+    purveyorDAO.findPurveyor(req.body)
+    .then( result => {
+        if(result && result[0].length > 0) {
+            let [row] = result[0]
+            res.status(200).send({
+                id: row.COD,
+                name: row.NOME,
+                email: row.EMAIL
+            })
+        }
+        res.send(undefined)
+    })
+    .catch( err => {
+        console.log('ERROR: ', err)
+        res.redirect('/')
+    })
+    
+}
+
 module.exports = {
     renderPage,
     savePurveyor,
-    getPurveyors
+    getPurveyors,
+    findPurveyor
 }

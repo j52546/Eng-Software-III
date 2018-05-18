@@ -44,8 +44,24 @@ const createClient = (req, res) => {
     })    
 }
 
+const getClients = (req, res) => {
+    clientDAO.getClients()
+    .then( result => {
+        if(result && result[0].length > 0) {
+            res.locals.users = users
+            res.locals.allClients = result[0]
+        }
+        res.render('lists/listClients')
+    })
+    .catch( err => {
+        console.log('ERROR: ', err)
+        res.redirect('/')
+    })
+}
+
 
 module.exports = {
     renderPage,
-    createClient
+    createClient,
+    getClients
 }

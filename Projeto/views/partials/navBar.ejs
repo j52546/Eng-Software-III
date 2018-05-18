@@ -16,12 +16,20 @@
             </li>
       
             <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE' || locals.user.role.toUpperCase() === 'VENDEDOR')){%>
-              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                <a class="nav-link" href="/create/client">
-                  <i class="fa fa-fw fa-file"></i>
-                  <span class="nav-link-text">Cadastrar Cliente</span>
-                </a>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseClient" data-parent="#exampleAccordion">
+              <i class="fa fa-fw fa-file"></i>
+              <span class="nav-link-text">Clientes</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseClient">
+              <li>
+                <a href="/create/client">Cadastrar cliente</a>
               </li>
+              <li>
+                <a href="/list/clients">Consultar clientes</a>
+              </li>
+            </ul>
+          </li>
             <%}%>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
               <a class="nav-link" href="tables.html">
@@ -41,6 +49,9 @@
                 </li>
                 <li>
                   <a href="/list/purveyor">Consultar</a>
+                </li>
+                <li>
+                  <a href="/compra/produtos">Comprar produtos</a>
                 </li>
               </ul>
             </li>

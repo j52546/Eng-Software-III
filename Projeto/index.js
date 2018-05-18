@@ -15,6 +15,7 @@ const register = require('./routes/register')
 const logout = require('./routes/logout')
 const create = require('./routes/cadastre')
 const list = require('./routes/lists')
+const compra = require('./routes/compra')
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
@@ -37,6 +38,7 @@ app.use('/logout', logout)
 app.use('/create', create)
 app.use('/list', list)
 app.use('/', home)
+app.use('/compra', compra)
 app.use('*',(req, res) => {
     res.status(404)
     res.render('notFound') 

@@ -13,6 +13,9 @@ async function saveClient(client) {
     })
 }
 
+const getClients = () => pool.execute('select * from cadclin1')
+
 module.exports = {
-    saveClient
+    saveClient,
+    getClients
 }
