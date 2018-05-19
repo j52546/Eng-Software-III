@@ -109,6 +109,9 @@ function sendPedido() {
                })
             },
             success: function( result ) {
+                pedidos = []
+                codigo_fornecedores = []
+                $('#dataTable').DataTable().clear().draw()
                 $.snackbar({
                     content:'pedido cadastrado com sucesso',
                     style:'toast',

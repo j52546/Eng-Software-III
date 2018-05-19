@@ -23,7 +23,12 @@ const renderPage = (req, res) => {
 
 const newProduct = (req, res) => {
     productDAO.saveCompra(req.body.content)
-    res.end()
+    .then( res => {
+        res.send({operation:'done'})
+    })
+    .catch( err => {
+        res.redirect('/')
+    })
 }
 
 module.exports = {
