@@ -22,9 +22,7 @@ const renderPage = (req, res) => {
 }
 
 const newProduct = (req, res) => {
-    console.log(req.body+'\n-----------------------')
-    let tot = req.body.items.map(v=>v.total).reduce((a, b)=>Number(a)+Number(b), 0)
-    productDAO.saveProduct(req.body.cod ,req.body, tot, req.body.items[0].name)
+    productDAO.saveCompra(req.body.content)
     res.end()
 }
 
