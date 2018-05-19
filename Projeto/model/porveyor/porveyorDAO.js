@@ -20,7 +20,7 @@ const getPurveyors = () => {
     .catch(error=>error)
 }
 
-const findPurveyor = ({id}) => pool.execute('select * from cadfornec1 where cod = ?', [id])
+const findPurveyor = ({id_fornec}) => pool.execute('select * from cadfornec1 where cod = ?', [id_fornec])
 
 module.exports = {
     savePurveyor,

@@ -1,69 +1,94 @@
 let pedidos = new Map()
 $(function() {
-    $('#form_product').submit(validateForm)
+    $('#validateForm').on('click', validateForm)
+    $('#form_product').submit(savePedido)
 })
 
 function validateForm() {
     $.ajax({
         url:'/compra/find/purveyor',
         method:'POST',
-        data: {id: $('#cod_fornec').val()},
+        data: {id_fornec: $('#cod_fornec').val(), id_prod: $('#id_produto').val()},
         error: function ( err ) {
             $('#errorFind').modal('show')
         },
-        success: populateTable
+        success: populateInputs
     })
+}
+
+function populateInputs(result) {
+    if(!('prodNotFound' in result) && !('purveyorNotFound' in result)) {
+        $('#cod_fornec').attr('disabled', true)
+        $('#id_produto').attr('disabled', true)
+        $('#valor').attr('disabled', true).val(result.preco_prod)
+        $('#descricao').val(result.desc_prod)
+        $('#nome_produto').val(result.name_prod)
+        $('#nome_fornec').val(result.name_purveyor)
+        $('#saveBtn').attr('disabled', false)
+    } else if('purveyorNotFound' in result) {
+        $('#purveyorNotFound').modal('show')
+    } else {
+        $('#prodNotFound').modal('show')
+    }
+}
+
+function savePedido() {
+    let name_prod = $('#nome_produto').val()
+    let name_fornec = $('#nome_fornec').val()
+    let cod_fornec = $('#cod_fornec').val()
+    let cod_prod = $('#id_produto').val()
+    let qtd = $('#qtd').val()
+    let preco = $('#valor').val()
+    let total = parseFloat(preco) * parseInt(qtd)
+    let table = $('#dataTable').DataTable()
+    table.row.add([
+        cod_fornec,
+        name_prod,
+        name_fornec,
+        qtd,
+        preco,
+        total.toFixed(2),
+        '<button class="btn btn-danger" onclick="deleteItem(this)">Excluir</button>'
+    ]).draw( false )
+
+    if(pedidos.has(cod_fornec.toString())) {
+        pedidos.set(cod_fornec.toString(), [...pedidos.get(cod_fornec.toString()), {
+            id: cod_fornec,
+            name_fornec: name_fornec,
+            name_produto: name_prod,
+            id_prod: cod_prod,
+            qtd,
+            preco,
+            total
+        }])
+    } else {
+        pedidos.set(cod_fornec.toString(), [{
+            id: cod_fornec,
+            name_fornec: name_fornec,
+            name_produto: name_prod,
+            id_prod: cod_prod,
+            qtd,
+            preco,
+            total
+        }])
+    }
+    $('#saveBtn').attr('disabled', true)
+    clearFields()
     return false
 }
 
-function populateTable(result) {
-    if(result) {
-        $('#cod_fornec').attr('disabled', true)
-        let name = $('#nome').val()
-        let qtd = $('#qtd').val()
-        let preco = $('#valor').val()
-        let total = parseInt(preco) * parseInt(qtd)
-        let html = `
-            <tr>
-                <td>${result.id}</td>
-                <td>${result.name}</td>
-                <td>${name}</td>
-                <td>${qtd}</td>
-                <td>${preco}</td>
-                <td>${total}</td>
-                <td><button class="btn btn-danger" onclick="deleteItem(this)">Excluir</button></td>
-            </tr>
-        `
-        if(pedidos.has(result.id.toString())) {
-            pedidos.set(result.id.toString(), [...pedidos.get(result.id.toString()), {
-                id: result.id,
-                name: result.name,
-                name_produto: name,
-                qtd,
-                preco,
-                total
-            }])
-        } else {
-            pedidos.set(result.id.toString(), [{
-                id: result.id,
-                name: result.name,
-                name_produto: name,
-                qtd,
-                preco,
-                total
-            }])
-        }
-        $('#table_body').append(html)
-    } else {
-        $('#purveyorNotFound').modal('show')
-    }
+function clearFields(){
+    $('#id_produto').attr('disabled', false).val('')
+    $('#descricao').val('')
+    $('#valor').val('')
+    $('#qtd').val('')
 }
 
 function deleteItem(context) {
     let cod = $('#cod_fornec').val()
-    pedidos.get(cod).splice($(context).parent().parent().index()-1, 1)
-    pedidos.set(cod, [...pedidos.get(cod)])
-    $(context).parent().parent().remove()
+    pedidos.get(cod.toString()).splice($(context).parent().parent().index(), 1)
+    pedidos.set(cod.toString(), [...pedidos.get(cod.toString())])
+    $('#dataTable').DataTable().row($(context).parent().parent()).remove().draw()
 }
 
 function showWarning() {
@@ -71,31 +96,32 @@ function showWarning() {
 }
 
 function sendPedido() {
-    if(pedidos.size > 0) {  
-        $.ajax({
-            url:'/compra/produtos',
-            method:'POST',
-            data: {cod:pedidos.keys().next().value,items:pedidos.get(pedidos.keys().next().value)},
-            error: function ( err ) {
-               $.snackbar({
-                   content:'erro no servidor',
-                   style:'toast',
-                   timeout: 3000
-               })
-            },
-            success: function( result ) {
-                $.snackbar({
-                    content:'pedido cadastrado com sucesso',
-                    style:'toast',
-                    timeout:3000
-                })
-            }
-        })
-    } else {
-        $.snackbar({
-            content:'Sem pedido na tabela',
-            style:'toast',
-            timeout:2000    
-        })
-    }
+    console.log(pedidos)
+    // if(pedidos.size > 0) {  
+    //     $.ajax({
+    //         url:'/compra/produtos',
+    //         method:'POST',
+    //         data: {cod:pedidos.keys().next().value,items:pedidos.get(pedidos.keys().next().value)},
+    //         error: function ( err ) {
+    //            $.snackbar({
+    //                content:'erro no servidor',
+    //                style:'toast',
+    //                timeout: 3000
+    //            })
+    //         },
+    //         success: function( result ) {
+    //             $.snackbar({
+    //                 content:'pedido cadastrado com sucesso',
+    //                 style:'toast',
+    //                 timeout:3000
+    //             })
+    //         }
+    //     })
+    // } else {
+    //     $.snackbar({
+    //         content:'Sem pedido na tabela',
+    //         style:'toast',
+    //         timeout:2000    
+    //     })
+    // }
 }
