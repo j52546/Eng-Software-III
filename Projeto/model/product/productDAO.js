@@ -12,7 +12,7 @@ const saveCompra =  async body => {
             .then( result => {
                 let total = values.items.map(v=>v.total).reduce((a,b)=>Number(a)+Number(b), 0)
                 return saveContas(connection, total, result[0].insertId).then(() => {
-                    values.items.map( content => {
+                   return values.items.map( content => {
                         let sqlItem =  'insert into itepedcomp (QTD, PREC, TOTAL, CABPEDCOMP_COD, CADPROD1_COD) values '
                         sqlItem = sqlItem.concat('(?,?,?,?,?)')
                         return connection.execute(sqlItem, [content.qtd, content.preco, content.preco*content.qtd, result[0].insertId, parseInt(content.id_prod)])
@@ -32,10 +32,21 @@ const saveCompra =  async body => {
             })
             
         })
+        let res = new Array()
         return Promise.all(result)
         .then((resultAll) => {
-            connection.commit()
-            connection.release()
+           resultAll.map(v=>v.map(c=>res.push(c)))
+            return Promise.all(res)
+            .then((r)=>{
+                connection.commit()
+                connection.release()
+            })
+            .catch( err => {
+
+
+                connection.roolback()
+                throw err
+            })
         })
         .catch( err => {
             console.log(err)

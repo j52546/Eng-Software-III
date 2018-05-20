@@ -44,28 +44,18 @@ function savePedido() {
     let table = $('#dataTable').DataTable()
     table.row.add([
         cod_fornec,
-        name_prod,
         name_fornec,
+        name_prod,
         qtd,
         preco,
         total.toFixed(2),
-        '<button class="btn btn-danger" onclick="deleteItem(this)">Excluir</button>'
+        '<button class="btn btn-danger" onclick="deleteItem(this)">Excluir</button>',
+        cod_prod
     ]).draw( false )
 
     if(codigo_fornecedores.indexOf(cod_fornec) === -1) {
         codigo_fornecedores.push(cod_fornec)
     } 
-
-    pedidos.push({
-        id: cod_fornec,
-        name_fornec: name_fornec,
-        name_produto: name_prod,
-        id_prod: cod_prod,
-        qtd,
-        preco,
-        total
-    })
-
     $('#saveBtn').attr('disabled', true)
     clearFields()
     return false
@@ -80,8 +70,8 @@ function clearFields(){
 }
 
 function deleteItem(context) {
-   pedidos.splice($(context).parent().parent().index(), 1)
     $('#dataTable').DataTable().row($(context).parent().parent()).remove().draw()
+    $('#dataTable').DataTable().rows().data().toArray().map(r=>console.log(r))
 }
 
 function showWarning() {
@@ -89,14 +79,15 @@ function showWarning() {
 }
 
 function sendPedido() {
+    initializePedido()
     let arrayBody = new Array()
     codigo_fornecedores.map(cod=>{
         let filterContent = pedidos.filter(ped=>ped.id===cod)
-        arrayBody.push({id_fornec: cod, items: filterContent})
+        filterContent.length > 0 && arrayBody.push({id_fornec: cod, items: filterContent, name_fornec:filterContent[0].name_fornec})
     })
 
     console.log(arrayBody)
-    if(arrayBody.length > 0) {  
+    if(arrayBody.length > 0 && pedidos.length > 0) {  
         $.ajax({
             url:'/compra/produtos',
             method:'POST',
@@ -109,14 +100,23 @@ function sendPedido() {
                })
             },
             success: function( result ) {
-                pedidos = []
-                codigo_fornecedores = []
-                $('#dataTable').DataTable().clear().draw()
-                $.snackbar({
-                    content:'pedido cadastrado com sucesso',
-                    style:'toast',
-                    timeout:3000
-                })
+               if(result.operation === 'done') {
+                    pedidos = []
+                    codigo_fornecedores = []
+                    $('#dataTable').DataTable().clear().draw()
+                    $.snackbar({
+                        content:'pedido cadastrado com sucesso',
+                        style:'toast',
+                        timeout:3000
+                    })
+                    
+                } else {
+                    $.snackbar({
+                        content:'erro no servidor',
+                        style:'toast',
+                        timeout: 3000
+                    })
+                }
             }
         })
     } else {
@@ -126,4 +126,20 @@ function sendPedido() {
             timeout:2000    
         })
     }
+}
+
+function initializePedido(){
+    pedidos = new Array()
+    $('#dataTable').DataTable().rows().data().toArray().map(content => {
+        pedidos.push({
+            id: content[0],
+            name_fornec: content[1],
+            name_produto: content[2],
+            id_prod: content[7],
+            qtd:content[3],
+            preco:content[4],
+            total: content[5] 
+        })
+    })
+   
 }

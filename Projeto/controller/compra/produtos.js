@@ -23,11 +23,12 @@ const renderPage = (req, res) => {
 
 const newProduct = (req, res) => {
     productDAO.saveCompra(req.body.content)
-    .then( res => {
+    .then( _ => {
         res.send({operation:'done'})
     })
     .catch( err => {
-        res.redirect('/')
+        console.log(err)
+        res.send({operation:'fail'})
     })
 }
 
