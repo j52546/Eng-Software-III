@@ -44,8 +44,8 @@
             <div style="display:flex; width:100%; justify-content:space-around">
               <button id="validateForm" type="button" class="btn btn-success">Validar formulário</button>
               <button id="saveBtn" disabled class="btn btn-primary" form="form_product">Salvar</button>
-              <button type="button" class="btn btn-primary">Cadastrar produto</button>
-              <button type="button" class="btn btn-primary">Ver produtos</button>
+              <button type="button" id="btnNovoProduto" class="btn btn-primary">Cadastrar produto</button>
+              <button type="button" onclick="loadingProducts()" class="btn btn-primary">Ver produtos</button>
             </div>
           </div>
         </form>
@@ -150,6 +150,77 @@
        </div>
      </div>
   </div>
+
+  <div class="modal fade" id="modal_novo_produto" tabindex="0" role="dialog" aria-labelledby="label" aria-hidden="true">
+    <div style="min-width:50vw" class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="label">Novo Produto</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="form_novo_produto" method="POST">
+              <div class="form-group row">
+                <div class="col-6">
+                    <label for="nome_novo_produto" class="col-form-label">Nome do produto</label>
+                  <input required class="form-control" maxlength="30" minlength="3" name="nome_novo_produto" type="text" placeholder="Nome do produto"
+                    id="nome_novo_produto">
+                  </div>
+                <div class="col-6">
+                      <label for="preco_produto" class="col-form-label">Informe preço</label>
+                    <input required class="form-control" step="0.01" name="preco_produto" type="number" placeholder="Informe preço do produto"
+                      id="preco_produto">
+                    </div>  
+                    <div class="col-12">
+                       <label for="descricao_produto" class="col-form-label">Código do fornecedor</label>
+                     <textarea required class="form-control" maxlength="250" rows="3" name="descricao_produto" type="text" placeholder="Descrição do produto"
+                       id="descricao_produto"></textarea>
+                    </div>  
+                 </div>
+            </form>
+           </div>
+           <div class="modal-footer">
+             <button type="submit" form="form_novo_produto" class="btn btn-primary">Finalizar</button>
+           </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="all_products" tabindex="0" role="dialog" aria-labelledby="label" aria-hidden="true">
+    <div style="min-width:99vw; margin:0px" class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="label">Novo Produto</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered" id="table_products" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Código produto</th>
+                <th>Nome produto</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody id="table_body">
+
+            </tbody>
+          </table>
+        </div>
+           <div class="modal-footer">
+             <button type="submit" data-dismiss="modal" class="btn btn-primary">Fechar</button>
+           </div>
+        </div>
+      </div>
+    </div>
+
       <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/assets/script/home/produto.js"></script>
     <% include ../partials/footerBar %>

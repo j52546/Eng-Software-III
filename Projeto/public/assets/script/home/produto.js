@@ -3,7 +3,13 @@ let codigo_fornecedores = new Array()
 $(function() {
     $('#validateForm').on('click', validateForm)
     $('#form_product').submit(savePedido)
+    $('#btnNovoProduto').on('click', openModalNovoProduto)
+    $('#form_novo_produto').submit(saveNovoProduto)
 })
+
+function openModalNovoProduto() {
+    $('#modal_novo_produto').modal('show')
+}
 
 function validateForm() {
     $.ajax({
@@ -142,4 +148,76 @@ function initializePedido(){
         })
     })
    
+}
+
+function saveNovoProduto(event) {
+    event.preventDefault()
+    let data = {
+        nome: $('#nome_novo_produto').val(),
+        preco: $('#preco_produto').val(),
+        descricao: $('#descricao_produto').val()
+    }
+   $.ajax({
+       url:'/novo/produto',
+       method:'POST',
+       data,
+       error: function( err ) {
+           $.snackbar({
+               content:'Erro no servidor',
+               timeout:3000,
+               style:'toast'
+           })
+       },
+       success: function( result ) {
+           if(result.operation === 'done') {
+                $.snackbar({
+                    content:'Produto cadastrado, id do produto: '+result.id,
+                    timeout:4000,
+                    style:'toast'
+                })
+            } else {
+                $.snackbar({
+                    content:'Erro no servidor',
+                    timeout:3000,
+                    style:'toast'
+                })
+            }
+       }
+   })
+   $('#nome_novo_produto').val(''),
+   $('#preco_produto').val(''),
+   $('#descricao_produto').val('')   
+}
+
+function loadingProducts() {
+    $('#table_products').DataTable().clear().draw()
+    $('#all_products').modal('show')
+    $.ajax({
+        url:'/produtos/all',
+        method:'GET',
+        error: function( err ) {
+            $.snackbar({
+                content:'Houve uma falha ao buscar dados',
+                timeout:3000
+            })
+        },
+        success: function (result) {
+            if(result.operation === 'done' && result.content.length > 0) {
+                result.content.forEach(value => {
+                    $('#table_products').DataTable().row.add([
+                        value.COD,
+                        value.NOME, 
+                        value.SALDO,
+                        value.PRECO.toFixed(2),
+                        value.DESCR
+                    ]).draw()
+                })
+            } else if(result.operation === 'fail') {
+                $.snackbar({
+                    content:'Houve uma falha ao buscar dados',
+                    timeout:3000
+                })
+            }
+        }
+    })
 }

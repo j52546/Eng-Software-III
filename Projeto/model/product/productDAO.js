@@ -72,8 +72,18 @@ function getDateVencimento() {
     
 }
 
+function saveNewProduct(produto) {
+    let sql = 'insert into cadprod1 (NOME, DESCR, SALDO, PRECO) values '
+    sql = sql.concat('(?,?,?,?)')
+    return pool.execute(sql, [produto.nome, produto.descricao, 0, produto.preco])
+}
+
+const getProducts = () => pool.execute('select * from cadprod1')
+
 
 module.exports = {
     saveCompra,
-    findProductById
+    findProductById,
+    saveNewProduct,
+    getProducts
 }
