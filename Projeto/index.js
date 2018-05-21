@@ -17,6 +17,7 @@ const create = require('./routes/cadastre')
 const list = require('./routes/lists')
 const compra = require('./routes/compra')
 const produto = require('./routes/produto')
+const venda = require('./routes/venda')
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
@@ -41,6 +42,7 @@ app.use('/list', list)
 app.use('/compra', compra)
 app.use('/novo', produto)
 app.use('/produtos', produto)
+app.use('/venda', venda)
 app.use('/', home)
 app.use('*',(req, res) => {
     res.status(404)

@@ -13,9 +13,12 @@ async function saveClient(client) {
     })
 }
 
+const findClientById = id => pool.execute('select * from cadclin1 where cod = ?', [id])
+
 const getClients = () => pool.execute('select * from cadclin1')
 
 module.exports = {
     saveClient,
-    getClients
+    getClients,
+    findClientById
 }
