@@ -18,6 +18,14 @@ const renderPageSales = (req, res) => {
     
 }
 
+const getItemsById = (req, res) => {
+    approveDAO.getItemSellById(req.body.id)
+    .then( items => {
+        console.log(items[0])
+    })
+    res.end()
+}
+
 const renderPagePurchases = (req, res) => {
     if(CONSTANTS.USERS.length > 0) {
         res.locals.users = CONSTANTS.USERS
@@ -29,5 +37,6 @@ const renderPagePurchases = (req, res) => {
 
 module.exports = {
     renderPageSales,
-    renderPagePurchases
+    renderPagePurchases,
+    getItemsById
 }
