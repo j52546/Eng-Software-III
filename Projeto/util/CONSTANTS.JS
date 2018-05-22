@@ -8,10 +8,12 @@ const ROLES = {
     FINANCIAL:'Financeiro',
     STOCK:'Estoque'
 }
+let USERS = new Array()
 
 module.exports = {
     SECRET_KEYBOARD,
     PORT_ON_SERVER,
     SECRET_ID,
-    ROLES
+    ROLES,
+    USERS
 }

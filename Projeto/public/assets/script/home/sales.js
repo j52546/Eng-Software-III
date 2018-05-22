@@ -1,3 +1,3 @@
 $(function(){
-    console.log('sales')
+    console.log($('#dataTableClin').DataTable().rows().data())
 })

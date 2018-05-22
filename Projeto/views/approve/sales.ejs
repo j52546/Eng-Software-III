@@ -2,9 +2,40 @@
   <% include ../partials/navBar %>
     <div class="content-wrapper">
       <% include ../partials/modalAcceptAccount %>
-      
+      <div>
+      <h2 style="text-align:center; margin-bottom:15px;">Lista de vendas para aprovação</h2>
+      <table class="table table-bordered" id="dataTableClin" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Data de vencimento</th>
+          <th>Data de pedido</th>
+          <th>Nome do client</th>
+          <th>Total de itens</th>
+          <th>Valor do pedido</th>
+          <th>Ações</th>
+          <th hidden>ID</th>
+        </tr>
+      </thead>
+      <tbody id="table_body">
+        <% if(sales.length > 0){%>
+          <%sales.map(content=>{%>
+            <tr>
+              <td><%= content.DATVENCIM.getDate() +'/'+ (content.DATVENCIM.getMonth()+1) +'/'+content.DATVENCIM.getFullYear() %></td>
+              <td><%= content.DATA_PED.getDate() +'/'+ (content.DATA_PED.getMonth()+1) +'/'+content.DATA_PED.getFullYear() %></td>
+              <td><%= content.NOME %></td>
+              <td><%= content.TOTAL_PED %></td>
+              <td><%= content.VALOR.toFixed(2) %></td>
+              <td><button class="btn btn-primary">Visualizar Pedido</button></td>
+              <td hidden><%= content.COD %></td>
+            </tr>
+          <%})%>
+        <%}%>
+      </tbody>
+    </table>      
+      </div>
     </div>
       <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/assets/script/home/sales.js"></script>
+ 
     <% include ../partials/footerBar %>
       <% include ../partials/footer %>

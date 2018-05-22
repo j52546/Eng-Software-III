@@ -6,6 +6,7 @@ const renderPage = (req, res) => {
         homeDAO.getAccountDontAuthorizated()
         .then( result => {
             if(result && result[0].length > 0) {
+                CONSTANTS.USERS = result[0]
                 res.locals.users = result[0] 
             }
             res.render('home/index')
@@ -15,6 +16,7 @@ const renderPage = (req, res) => {
             res.redirect('/login')
         })
     } else {
+        CONSTANTS.USERS.length = 0
         res.render('home/index')
     }
 }
