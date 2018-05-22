@@ -51,9 +51,9 @@ function saveVenda() {
         qtd,
         preco,
         total.toFixed(2),
+        saldo,
         '<button class="btn btn-danger" onclick="deleteItem(this)">Excluir</button>',
         cod_prod,
-        saldo
     ]).draw( false )
 
     if(codigo_clientes.indexOf(id_client) === -1) {
@@ -88,51 +88,59 @@ function sendVenda() {
         filterContent.length > 0 && arrayBody.push({id_client: cod, items: filterContent, name_client:filterContent[0].name_client})
     })
 
-    // arrayBody.map(value=>{
-    //     value.items.map(content=>{
-            
-    //     })
-    // })
-    console.log(arrayBody)
-    // if(arrayBody.length > 0 && clients.length > 0) {  
-    //     $.ajax({
-    //         url:'/venda',
-    //         method:'POST',
-    //         data: {content: arrayBody},
-    //         error: function ( err ) {
-    //            $.snackbar({
-    //                content:'erro no servidor',
-    //                style:'toast',
-    //                timeout: 3000
-    //            })
-    //         },
-    //         success: function( result ) {
-    //            if(result.operation === 'done') {
-    //                 clients = []
-    //                 codigo_clientes = []
-    //                 $('#dataTable').DataTable().clear().draw()
-    //                 $.snackbar({
-    //                     content:'venda cadastrada com sucesso',
-    //                     style:'toast',
-    //                     timeout:3000
-    //                 })
+    let productsWithBalanceZero = new Array()
+    arrayBody.map(value=>{
+        productsWithBalanceZero = value.items.filter(content=>parseInt(content.saldo) === 0)
+    })
+
+    if(productsWithBalanceZero.length > 0) {
+        let html = ''
+        productsWithBalanceZero.forEach(value=>{
+            html += '<li class="list-group-item">'+value.name_produto+'</li>'
+        })
+        $('#products_with_zero_balance').html(html)
+        $('#alertAboutProducts').modal('show')
+    }
+
+    if(arrayBody.length > 0 && clients.length > 0 && productsWithBalanceZero.length === 0) {  
+        $.ajax({
+            url:'/venda',
+            method:'POST',
+            data: {content: arrayBody},
+            error: function ( err ) {
+               $.snackbar({
+                   content:'erro no servidor',
+                   style:'toast',
+                   timeout: 3000
+               })
+            },
+            success: function( result ) {
+               if(result.operation === 'done') {
+                    clients = []
+                    codigo_clientes = []
+                    $('#dataTable').DataTable().clear().draw()
+                    $.snackbar({
+                        content:'venda cadastrada com sucesso',
+                        style:'toast',
+                        timeout:3000
+                    })
                     
-    //             } else {
-    //                 $.snackbar({
-    //                     content:'erro no servidor',
-    //                     style:'toast',
-    //                     timeout: 3000
-    //                 })
-    //             }
-    //         }
-    //     })
-    // } else {
-    //     $.snackbar({
-    //         content:'Sem pedido de venda na tabela',
-    //         style:'toast',
-    //         timeout:2000    
-    //     })
-    // }
+                } else {
+                    $.snackbar({
+                        content:'erro no servidor',
+                        style:'toast',
+                        timeout: 3000
+                    })
+                }
+            }
+        })
+    } else if(productsWithBalanceZero.length === 0) {
+        $.snackbar({
+            content:'Sem pedido de venda na tabela',
+            style:'toast',
+            timeout:2000    
+        })
+    }
 }
 
 function initializeVenda(){
@@ -142,11 +150,11 @@ function initializeVenda(){
             id: content[0],
             name_client: content[1],
             name_produto: content[2],
-            id_prod: content[7],
+            id_prod: content[8],
             qtd:content[3],
             preco:content[4],
             total: content[5],
-            saldo: content[8] 
+            saldo: content[6] 
         })
     })
    

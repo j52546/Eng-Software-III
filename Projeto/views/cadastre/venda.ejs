@@ -65,6 +65,7 @@
                     <th>Quantidade</th>
                     <th>Preço</th>
                     <th>Total</th>
+                    <th>Quantidade em estoque</th>
                     <th>Ações</th>
                   </tr>
                 </thead>
@@ -187,22 +188,19 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="label">Aviso</h5>
+          <h5 class="modal-title" id="label">A venda não pode prosseguir, pois os produtos abaixo estão com saldo zerado no estoque</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body alert alert-info">
+        <div class="modal-body">
         <div class="card" style="width: 18rem;">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
+          <ul id="products_with_zero_balance" class="list-group list-group-flush">
           </ul>
         </div>
         </div>
         <div class="modal-footer">
-          <button onclick="sendVenda()" data-dismiss="modal" class="btn btn-primary">Finalizar</button>
+          <button onclick="sendVenda()" data-dismiss="modal" class="btn btn-primary">ok</button>
         </div>
       </div>
     </div>
