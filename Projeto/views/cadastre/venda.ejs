@@ -44,7 +44,7 @@
             <div style="display:flex; width:100%; justify-content:space-around">
               <button id="validateForm" type="button" class="btn btn-success">Validar formulário</button>
               <button id="saveBtn" disabled class="btn btn-primary" form="form_venda">Salvar</button>
-              <button type="button" class="btn btn-primary">Ver clientes</button>
+              <button onclick="getAllClients()" type="button" class="btn btn-primary">Ver clientes</button>
               <button type="button" onclick="loadingProducts()" class="btn btn-primary">Ver produtos</button>
             </div>
           </div>
@@ -77,7 +77,7 @@
           </div>
           <div class="card-footer small text-muted">Certifique-se antes de enviar</div>
           </div>
-          <div style="display:flex;width:100%;justify-content:center">
+          <div style="display:flex;width:100%;justify-content:center; margin-bottom:10px">
             <button onclick="showWarning()"  class="btn btn-primary">Finalizar Venda</button>
           </div>
 
@@ -183,6 +183,40 @@
         </div>
       </div>
     </div>
+
+
+    <div class="modal fade" id="all_clients" tabindex="0" role="dialog" aria-labelledby="label" aria-hidden="true">
+    <div style="min-width:99vw; margin:0px" class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="label">Novo Produto</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered" id="table_clients" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Código do cliente</th>
+                <th>Nome do cliente</th>
+                <th>email</th>
+                <th>telefone</th>
+                <th>Pessoa (Física/Jurídica)</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+           <div class="modal-footer">
+             <button type="submit" data-dismiss="modal" class="btn btn-primary">Fechar</button>
+           </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="modal fade" id="alertAboutProducts" tabindex="0" role="dialog" aria-labelledby="label" aria-hidden="true">
     <div class="modal-dialog" role="document">

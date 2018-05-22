@@ -18,7 +18,7 @@
             <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE' || locals.user.role.toUpperCase() === 'VENDEDOR')){%>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseClient" data-parent="#exampleAccordion">
-              <i class="fa fa-fw fa-file"></i>
+              <i class="fa fa-users"></i>
               <span class="nav-link-text">Clientes</span>
             </a>
             <ul class="sidenav-second-level collapse" id="collapseClient">
@@ -43,7 +43,7 @@
           <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE') || (locals.user.role.toUpperCase() === 'COMPRADOR')){%>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
               <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-                <i class="fa fa-fw fa-wrench"></i>
+                <i class="fa fa-truck"></i>
                 <span class="nav-link-text">Fornecedores</span>
               </a>
               <ul class="sidenav-second-level collapse" id="collapseComponents">
@@ -59,6 +59,23 @@
               </ul>
             </li>
           <%} %>
+
+          <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE') || (locals.user.role.toUpperCase() === 'FINANCEIRO')){%>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#financeiro_collapse" data-parent="#exampleAccordion">
+              <i class="fa fa-folder-open"></i>
+              <span class="nav-link-text">Vendas/Compras</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="financeiro_collapse">
+              <li>
+                <a href="/approve/sales">Aprovação de vendas</a>
+              </li>
+              <li>
+                <a href="/approve/purchases">Aprovação de compras</a>
+              </li>
+            </ul>
+          </li>
+        <%} %>
           </ul>
           <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">
@@ -82,7 +99,7 @@
                   </span>
                 <%}%>
               </a>
-              <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+              <div style="left:-125px" class="dropdown-menu" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">Registros</h6>
                 <% if('users' in locals && locals.users.length > 0){ %>
                   <% locals.users.map(content => { %>
@@ -92,8 +109,7 @@
                         <strong>
                           <i class="fa fa-long-arrow-up fa-fw"></i><%=content.NOME %></strong>
                       </span>
-                      <span class="small float-right text-muted">11:21 AM</span>
-                      <div class="dropdown-message small">Este usuário solicitou cadastrado no sistema</div>
+                    <div class="dropdown-message small">Este usuário solicitou cadastrado no sistema</div>
                     </button>
                   <%}) %>
                 <%} %>

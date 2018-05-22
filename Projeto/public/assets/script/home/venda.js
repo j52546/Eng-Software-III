@@ -192,3 +192,31 @@ function loadingProducts() {
         }
     })
 }
+
+function getAllClients() {
+    $('#table_clients').DataTable().clear().draw()
+    $('#all_clients').modal('show')
+    $.ajax({
+        url:'/clients/all',
+        method:'GET',
+        error: function( err ) {
+           $.snackbar({
+               timeout:3000,
+               content:'Houve uma falha ao buscar dados'
+           })
+        },
+        success: function ( result ) {
+            if(result.operation === 'done' && result.content.length > 0) {
+                result.content.map(content=>{
+                    $('#table_clients').DataTable().row.add([
+                        content.id,
+                        content.name,
+                        content.email,
+                        content.phone,
+                        content.person
+                    ]).draw()
+                })
+            }
+        }
+    })
+}
