@@ -9,7 +9,7 @@ function getAllSales(){
 }
 
 function getItemSellById(id) {
-    let sql = `select prod.NOME, prod.PRECO, i.QTD, prod.DESCR, prod.SALDO from itepedven as i
+    let sql = `select prod.COD, prod.NOME, prod.PRECO, i.QTD, prod.DESCR, prod.SALDO from itepedven as i
                join cadprod1 as prod on i.CADPROD1_COD = prod.COD
                where i.CABPED_COD = ?`
     return pool.execute(sql, [id])

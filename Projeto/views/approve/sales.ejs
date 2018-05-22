@@ -9,7 +9,7 @@
         <tr>
           <th>Data de vencimento</th>
           <th>Data de pedido</th>
-          <th>Nome do client</th>
+          <th>Nome do cliente</th>
           <th>Total de itens</th>
           <th>Valor do pedido</th>
           <th>Ações</th>
@@ -25,7 +25,13 @@
               <td><%= content.NOME %></td>
               <td><%= content.TOTAL_PED %></td>
               <td><%= content.VALOR.toFixed(2) %></td>
-              <td><button class="btn btn-primary">Visualizar Pedido</button></td>
+              <td>
+                <button onclick="moreInformation(this)" data-toggle="tooltip" data-placement="top" title="Visualizar pedido" class="btn btn-primary btnInformation">
+                  <i class="fa fa-plus" aria-hidden="true"></i> 
+                </button>
+                <button class="btn btn-success">Aprovar</button>
+                <button class="btn btn-danger" >Reprovar</button>  
+              </td>
               <td hidden><%= content.COD %></td>
             </tr>
           <%})%>
@@ -33,6 +39,43 @@
       </tbody>
     </table>      
       </div>
+
+
+      <div class="modal fade" id="all_items" tabindex="0" role="dialog" aria-labelledby="label" aria-hidden="true">
+      <div style="min-width:100vw; margin:0px" class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="label">Novo Produto</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <table class="table table-bordered" id="table_items" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Código produto</th>
+                  <th>Nome produto</th>
+                  <th>Preço</th>
+                  <th>Quantidade pedida</th>
+                  <th>Descrição</th>
+                  <th>Saldo no estoque</th>
+                </tr>
+              </thead>
+              <tbody id="table_body">
+  
+              </tbody>
+            </table>
+          </div>
+             <div class="modal-footer">
+               <button type="submit" data-dismiss="modal" class="btn btn-primary">Fechar</button>
+             </div>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
       <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/assets/script/home/sales.js"></script>

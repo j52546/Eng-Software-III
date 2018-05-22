@@ -21,9 +21,12 @@ const renderPageSales = (req, res) => {
 const getItemsById = (req, res) => {
     approveDAO.getItemSellById(req.body.id)
     .then( items => {
-        console.log(items[0])
+        res.status(200).send(items[0])
     })
-    res.end()
+    .catch( err => {
+        console.log('ERROR: ', err) 
+        res.status(500).send({error:'fail'})
+    })
 }
 
 const renderPagePurchases = (req, res) => {
