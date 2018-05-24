@@ -135,6 +135,7 @@ async function approvePurchase(id_comp, id_cab) {
        })
 
     } catch (error) {
+        connection.rollback()
         throw error
     }
 
