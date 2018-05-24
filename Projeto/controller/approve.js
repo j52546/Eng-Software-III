@@ -33,8 +33,17 @@ const renderPagePurchases = (req, res) => {
     if(CONSTANTS.USERS.length > 0) {
         res.locals.users = CONSTANTS.USERS
     }
+
+    approveDAO.getAllPurchases()
+    .then(purchases=>{
+        let [row] = purchases
+        res.render('approve/purchases', {purchases:row})
+    })
+    .catch( err => {
+        console.log('ERROR: ', err)
+        res.redirect('/')
+    })
   
-     res.render('approve/purchases')
  }
 
 const approveSale = (req, res) => {
@@ -48,9 +57,33 @@ const approveSale = (req, res) => {
     })
 }
 
+const findPurchasesById = (req, res) => {
+    approveDAO.findPurchasesById(req.body.id)
+    .then( items => {
+        res.status(200).send(items[0])
+    })
+    .catch( err => {
+        res.status(500).send({error:'fail'})
+    })
+}
+
+const approvePurchases = (req, res) => {
+    approveDAO.approvePurchase(req.body.item[0], req.body.item[6])
+    .then(()=>{
+        res.status(200).send({operation:'done'})
+    })
+    .catch( err => {
+        console.log('ERROR: ', err)
+        res.status(500).send({operation:'fail'})
+    })
+}
+
+
 module.exports = {
     renderPageSales,
     renderPagePurchases,
     getItemsById,
-    approveSale
+    approveSale,
+    findPurchasesById,
+    approvePurchases
 }

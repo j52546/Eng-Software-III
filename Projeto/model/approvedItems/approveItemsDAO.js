@@ -87,8 +87,64 @@ function findItems(connection, id) {
     return connection.execute(sqlFindItems, [id])
 }
 
+function getAllPurchases() {
+    let sql = `select p.ID, p.DATVENCIM as data_vencimento, c.NOMEFORNEC as nome_fornecedor, c.TOTAL_PED as total_ped, p.VALOR as valor, c.COD
+    from conpagar as p join cabpedcomp as c
+    on p.CABPEDCOMP_COD = c.COD where p.PAGO = 0`
+    return pool.execute(sql)
+
+}
+
+function findPurchasesById(id) {
+    let sql = `select prod.COD, prod.NOME, prod.PRECO, i.QTD, prod.DESCR, prod.SALDO from itepedcomp as i
+    join cadprod1 as prod on i.CADPROD1_COD = prod.COD
+    where i.CABPEDCOMP_COD = ?`
+    return pool.execute(sql, [id])
+}
+
+function findItemsPurchases(connection, id) {
+    let sqlFindItems = `select prod.COD, prod.NOME, prod.PRECO, i.QTD, prod.DESCR, prod.SALDO from itepedcomp as i
+    join cadprod1 as prod on i.CADPROD1_COD = prod.COD
+    where i.CABPEDCOMP_COD = ?`
+    return connection.execute(sqlFindItems, [id])
+}
+
+async function approvePurchase(id_comp, id_cab) {
+    let sqlUpdatePurchase = 'update conpagar set pago = 1, datpagamento = ? where id = ?'
+    let sqlFindItems = 'select * from cadprod1 where cod = ?'
+    let sqlUpdateProd = 'update cadprod1 set saldo = ? where cod = ?'
+    let connection = await pool.getConnection()
+    try {
+        await connection.beginTransaction()
+        await connection.execute(sqlUpdatePurchase, [new Date(), id_comp])
+        let [items] = await findItemsPurchases(connection, id_cab)
+        let item = items.map(async content=>{
+            let prod = await connection.execute(sqlFindItems, [content.COD])
+            let [product] = prod
+            return {id: product[0].COD, saldo: product[0].SALDO, qtd: content.QTD}
+        })
+
+        let result = await Promise.all(item)
+        let ids = result.filter((v, index)=>result.map(c=>c.id).indexOf(v.id)==index)
+        ids.map(async value => {
+            let tot = value.saldo + result.filter(c=>c.id===value.id).map(c=>c.qtd).reduce((a,b)=>a+b,0)
+            let sql = 'update cadprod1 set saldo = ? where cod = ?'
+            await connection.execute(sql, [tot, value.id])
+            connection.commit()
+            connection.release()
+       })
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
 module.exports = {
     getAllSales,
     getItemSellById,
-    approveItemById
+    approveItemById,
+    getAllPurchases,
+    findPurchasesById,
+    approvePurchase
 }
