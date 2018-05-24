@@ -33,13 +33,24 @@ const renderPagePurchases = (req, res) => {
     if(CONSTANTS.USERS.length > 0) {
         res.locals.users = CONSTANTS.USERS
     }
-    
- 
-    res.render('approve/purchases')
+  
+     res.render('approve/purchases')
  }
+
+const approveSale = (req, res) => {
+    approveDAO.approveItemById(parseInt(req.body.item[0]), parseInt(req.body.item[7]))
+    .then(()=>{
+        res.status(200).send({operation:'done'})
+    })
+    .catch(err=>{
+        console.log('ERROR: ', err)
+        res.status(500).send({operation:'fail'})
+    })
+}
 
 module.exports = {
     renderPageSales,
     renderPagePurchases,
-    getItemsById
+    getItemsById,
+    approveSale
 }

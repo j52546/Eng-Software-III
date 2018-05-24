@@ -1,3 +1,13 @@
+let itemToBeReproved = {
+    item:undefined,
+    component:undefined
+}
+
+let itemToBeApproved = {
+    item:undefined,
+    component:undefined
+}
+
 $(function(){
     $('#closeOptions').on('click', changeNameBtn)
     $('#dataTableClin').DataTable()
@@ -17,7 +27,7 @@ function moreInformation(context){
     $('#table_items').DataTable().clear().draw()
     let data = $('#dataTableClin').DataTable().row($(context).parent().parent()).data()
     if(data.length > 0) {
-        let id = data[6]
+        let id = data[7]
         $.ajax({
             url:'/approve/sales/items',
             method: 'POST',
@@ -45,4 +55,75 @@ function moreInformation(context){
             }
         })
     }
+}
+
+function approveSale(btn) {
+    itemToBeApproved.item = $('#dataTableClin').DataTable().row($(btn).parent().parent()).data()
+    itemToBeApproved.component = $(btn).parent().parent()
+    $('#alert_approve').modal('show')
+}
+
+function reproveSale(btn) {
+    itemToBeReproved.item = $('#dataTableClin').DataTable().row($(btn).parent().parent()).data()
+    itemToBeReproved.component = $(btn).parent().parent()
+    $('#alert_reprove').modal('show')
+}
+
+function reprovedItem() {
+    $.ajax({
+        url:'/reprove/sales',
+        method:'POST',
+        data:{item: itemToBeReproved.item},
+        error: function ( err ) {
+            $.snackbar({
+                content:'Error ao reprovar item',
+                timeout:3000
+            })
+        },
+        success: function ( result ) {
+            if(result.operation === 'done') {
+                $.snackbar({
+                    content:'Venda reprovada',
+                    timeout:3000,
+                    style:'toast'
+                })
+                $('#dataTableClin').DataTable().row(itemToBeReproved.component).remove().draw()
+                setUndefinedItemToBeReproved()
+            }
+        }
+    })
+}
+
+function approveItem() {
+    $.ajax({
+        url:'/approve/sales',
+        method:'POST',
+        data:{item: itemToBeApproved.item},
+        error: function ( err ) {
+            $.snackbar({
+                content:'Error ao aprovar item',
+                timeout:3000
+            })
+        },
+        success: function ( result ) {
+            if(result.operation === 'done') {
+                $.snackbar({
+                    content:'Venda aprovada',
+                    timeout:3000,
+                    style:'toast'
+                })
+                $('#dataTableClin').DataTable().row(itemToBeApproved.component).remove().draw()
+                setUndefinedItemToBeApproved()
+            }
+        }
+    })
+
+}
+
+function setUndefinedItemToBeApproved() {
+    itemToBeApproved.component = itemToBeApproved.item = undefined
+}
+
+function setUndefinedItemToBeReproved() {
+    itemToBeReproved.component = itemToBeReproved.item = undefined
 }

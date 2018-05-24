@@ -90,7 +90,7 @@ function sendVenda() {
 
     let productsWithBalanceZero = new Array()
     arrayBody.map(value=>{
-        productsWithBalanceZero = value.items.filter(content=>parseInt(content.saldo) === 0)
+        productsWithBalanceZero = value.items.filter(content=>parseInt(content.saldo) === 0 || clients.filter(v=>value.items[0].id_prod === v.id_prod).map(c=>c.qtd).reduce((a,b)=>parseInt(a)+parseInt(b),0) > parseInt(content.saldo))
     })
 
     if(productsWithBalanceZero.length > 0) {
@@ -114,7 +114,7 @@ function sendVenda() {
                    timeout: 3000
                })
             },
-            success: function( result ) {
+            success: function( result ) {   
                if(result.operation === 'done') {
                     clients = []
                     codigo_clientes = []

@@ -20,6 +20,7 @@ const produto = require('./routes/produto')
 const venda = require('./routes/venda')
 const client = require('./routes/client')
 const approve = require('./routes/approve')
+const reprove = require('./routes/reprove')
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
@@ -47,6 +48,7 @@ app.use('/produtos', produto)
 app.use('/venda', venda)
 app.use('/clients', client)
 app.use('/approve', approve)
+app.use('/reprove', reprove)
 app.use('/', home)
 app.use('*',(req, res) => {
     res.status(404)

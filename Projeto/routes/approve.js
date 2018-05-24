@@ -10,6 +10,8 @@ router.use(function (req, res, next) {
 })
 
 router.get('/sales', approveController.renderPageSales)
+router.post('/sales', approveController.approveSale)
+
 router.post('/sales/items', approveController.getItemsById)
 
 router.get('/purchases', approveController.renderPagePurchases)
