@@ -38,7 +38,7 @@ const postPassword = (req, res) => {
        .then( result => {
            if(result && result.fields.length > 0) {
                 let token = new Buffer(CONSTANTS.SECRET_ID.concat(result.fields[0].COD)).toString('base64')
-                html = html.replace('href', `href='http://localhost:${CONSTANTS.PORT_ON_SERVER}/recuperar-senha/${token}'`)
+                html = html.replace('href', `href='http://138.255.220.138:${CONSTANTS.PORT_ON_SERVER}/recuperar-senha/${token}'`)
                 transporter.sendMail(getMailOptions(req.body.email, html), callbackEmail)
                 res.locals.success = true
                 res.render('auth/forgotPassword')
