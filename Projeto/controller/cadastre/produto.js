@@ -49,7 +49,7 @@ const renderPageEntranceAndExit = (req, res) => {
 }
 
 const getProductEnter = (req, res) => {
-    res.set('Cache-Control', 'public, max-age=10000')
+    res.set('Cache-Control', 'public, max-age=1000')
     produtoDAO.getProductsEnter()
     .then(products=>{
         res.status(200).send({operation:'done', content:products[0]})
@@ -61,7 +61,7 @@ const getProductEnter = (req, res) => {
 }
 
 const getProductExit = (req, res) => {
-    res.set('Cache-Control', 'public, max-age=10000')
+    res.set('Cache-Control', 'public, max-age=1000')
     produtoDAO.getProductsExit()
     .then(products=>{
         res.status(200).send({operation:'done', content:products[0]})
