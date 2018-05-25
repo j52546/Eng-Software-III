@@ -78,6 +78,24 @@ function saveNewProduct(produto) {
     return pool.execute(sql, [produto.nome, produto.descricao, 0, produto.preco])
 }
 
+function getProductsEnter(){
+    let sql = `select prod.COD, prod.NOME, sum(i.QTD) as quantidade, prod.SALDO from conpagar as con
+    join cabpedcomp as cab on cab.COD = con.CABPEDCOMP_COD
+    join itepedcomp as i on i.CABPEDCOMP_COD = cab.COD
+    join cadprod1 as prod on prod.COD = i.CADPROD1_COD
+    where con.PAGO = 0 group by prod.NOME`
+    return pool.execute(sql)
+}
+
+function getProductsExit() {
+    let sql = `select prod.COD, prod.NOME, sum(i.QTD) as quantidade, prod.SALDO from conrec as con
+    join cabpedven as c on c.COD = con.ID
+    join itepedven as i on c.COD = i.CABPED_COD
+    join cadprod1 as prod on prod.COD = i.CADPROD1_COD
+    where con.RECEBIDO = 0 group by prod.NOME`
+    return pool.execute(sql)
+}
+
 const getProducts = () => pool.execute('select * from cadprod1')
 
 
@@ -85,5 +103,7 @@ module.exports = {
     saveCompra,
     findProductById,
     saveNewProduct,
-    getProducts
+    getProducts,
+    getProductsEnter,
+    getProductsExit
 }

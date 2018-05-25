@@ -71,7 +71,7 @@ function reproveSale(btn) {
 
 function reprovedItem() {
     $.ajax({
-        url:'/reprove/sales',
+        url:'/reprove/purchases',
         method:'POST',
         data:{item: itemToBeReproved.item},
         error: function ( err ) {
@@ -89,6 +89,11 @@ function reprovedItem() {
                 })
                 $('#dataTableClin').DataTable().row(itemToBeReproved.component).remove().draw()
                 setUndefinedItemToBeReproved()
+            } else {
+                $.snackbar({
+                    content:'Error ao reprovar item',
+                    timeout:3000
+                })
             }
         }
     })

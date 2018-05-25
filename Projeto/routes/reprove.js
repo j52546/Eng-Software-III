@@ -10,5 +10,6 @@ router.use(function(req, res, next) {
 })
 
 router.post('/sales', reproveController.reproveSale)
+router.post('/purchases', reproveController.reprovePurchase)
 
 module.exports = router

@@ -1,4 +1,5 @@
 const produtoDAO = require('../../model/product/productDAO')
+const CONSTANTS = require('../../util/CONSTANTS.JS')
 
 const novoProduto = (req, res) => {
     produtoDAO.saveNewProduct(req.body)
@@ -25,7 +26,57 @@ const getAllProducts = (req, res) => {
         res.send({operation:'fail'})
     })
 }
+
+const getAllProductsAndRender = (req, res) => {
+    produtoDAO.getProducts()
+    .then(result=>{
+        res.locals.users = CONSTANTS.USERS
+        if(result && result[0].length > 0) {
+            res.render('lists/products', {products:result[0]})
+        } else {
+            res.render('lists/products', {products:new Array()})
+        }
+    })
+    .catch(err=>{
+        console.log('ERROR: ', err)
+        res.redirect('/')
+    })
+}
+
+const renderPageEntranceAndExit = (req, res) => {
+    res.locals.users = CONSTANTS.USERS
+    res.render('lists/entranceAndExit')
+}
+
+const getProductEnter = (req, res) => {
+    res.set('Cache-Control', 'public, max-age=10000')
+    produtoDAO.getProductsEnter()
+    .then(products=>{
+        res.status(200).send({operation:'done', content:products[0]})
+    })
+    .catch(err=>{
+        console.log('ERROR: ',  err)
+        res.status(500).send({operation:'fail'})
+    })
+}
+
+const getProductExit = (req, res) => {
+    res.set('Cache-Control', 'public, max-age=10000')
+    produtoDAO.getProductsExit()
+    .then(products=>{
+        res.status(200).send({operation:'done', content:products[0]})
+    })
+    .catch(err=>{
+        console.log('ERROR: ',  err)
+        res.status(500).send({operation:'fail'})
+    })
+}
+
 module.exports = {
     novoProduto,
-    getAllProducts
+    getAllProducts,
+    getAllProductsAndRender,
+    renderPageEntranceAndExit,
+    getProductEnter,
+    getProductExit
 }

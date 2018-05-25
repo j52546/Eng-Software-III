@@ -76,6 +76,25 @@
             </ul>
           </li>
         <%} %>
+
+        <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE') || (locals.user.role.toUpperCase() === 'ESTOQUE')){%>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#estoque_collapse" data-parent="#exampleAccordion">
+            <i class="fa fa-folder-open"></i>
+            <span class="nav-link-text">Estoque</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="estoque_collapse">
+            <li>
+              <a href="/list/products">Produtos</a>
+            </li>
+            <li>
+              <a href="/list/entrance/exit">Entrada/saída</a>
+            </li>
+          </ul>
+        </li>
+      <%} %>
+
+
           </ul>
           <ul class="navbar-nav sidenav-toggler">
             <li id="closeOptions" class="nav-item">
