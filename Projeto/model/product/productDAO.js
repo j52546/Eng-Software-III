@@ -96,6 +96,17 @@ function getProductsExit() {
     return pool.execute(sql)
 }
 
+function getReportsProduct(){
+    let sql = `select p.COD as codigo, p.NOME as nome, p.DESCR as descricao, p.PRECO as preco,
+    p.SALDO as saldo, sum(i.QTD) as quantidade, sum(i.TOTAL) as renda_final from conrec as cn
+   join cabpedven as c on c.COD = cn.CABPEDVEN_COD
+   join itepedven as i on i.CABPED_COD = c.COD
+   join cadprod1 as p on p.COD = i.CADPROD1_COD
+   where cn.RECEBIDO = 1
+   group by p.COD`
+   return pool.execute(sql)
+}
+
 const getProducts = () => pool.execute('select * from cadprod1')
 
 
@@ -105,5 +116,6 @@ module.exports = {
     saveNewProduct,
     getProducts,
     getProductsEnter,
-    getProductsExit
+    getProductsExit,
+    getReportsProduct
 }
