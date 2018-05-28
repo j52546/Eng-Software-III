@@ -36,3 +36,32 @@ function productsPDF(){
     doc.autoTable(columns, rows, options)
     doc.save('Produtos_vendidos.pdf')
 }
+
+function downloadPDFEmployee(){
+    let options = {            
+        startY: 20,
+        margin: { horizontal: 5 },
+        bodyStyles: { valign: 'top' },
+        styles: { overflow: 'linebreak' },
+        headerStyles: {
+            fillColor: [51, 122, 183],
+            textColor: [255],
+            halign: 'center'
+        },
+        theme: 'grid'
+    }
+    const columns = ['Nome', 'Documento', 'Telefone', 'Email', 'Função']
+    let rows = new Array()
+    const doc = new jsPDF()
+    doc.setFontSize(18);
+    doc.setTextColor(40);
+    doc.setFontStyle('bold');
+    doc.text("Lista de funcionários", 80, 12);
+    const data = $('#dataTable').DataTable().rows().data()
+    for(let i = 0; i < data.length; i++){
+         rows.push(data[i])
+    }
+    doc.autoTable(columns, rows, options)
+    doc.save('Funcionários.pdf')
+    
+}
