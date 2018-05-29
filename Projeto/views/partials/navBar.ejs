@@ -16,7 +16,7 @@
             </li>
       
             <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE' || locals.user.role.toUpperCase() === 'VENDEDOR')){%>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Clientes">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseClient" data-parent="#exampleAccordion">
               <i class="fa fa-users"></i>
               <span class="nav-link-text">Clientes</span>
@@ -35,7 +35,7 @@
           </li>
             <%}%>
           <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE') || (locals.user.role.toUpperCase() === 'COMPRADOR')){%>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Fornecedores">
               <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                 <i class="fa fa-truck"></i>
                 <span class="nav-link-text">Fornecedores</span>
@@ -55,7 +55,7 @@
           <%} %>
 
           <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE')){%>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relatórios">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#relatoriosComponent" data-parent="#exampleAccordion">
               <i class="fa fa-file-pdf-o"></i>
               <span class="nav-link-text">Relatórios</span>
@@ -72,7 +72,7 @@
         <%} %>
 
           <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE') || (locals.user.role.toUpperCase() === 'FINANCEIRO')){%>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Vendas/Compras">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#financeiro_collapse" data-parent="#exampleAccordion">
               <i class="fa fa-folder-open"></i>
               <span class="nav-link-text">Vendas/Compras</span>
@@ -89,7 +89,7 @@
         <%} %>
 
         <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE') || (locals.user.role.toUpperCase() === 'ESTOQUE')){%>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Estoque">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#estoque_collapse" data-parent="#exampleAccordion">
             <i class="fa fa-archive" aria-hidden="true"></i>
             <span class="nav-link-text">Estoque</span>
