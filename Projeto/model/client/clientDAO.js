@@ -17,8 +17,20 @@ const findClientById = id => pool.execute('select * from cadclin1 where cod = ?'
 
 const getClients = () => pool.execute('select * from cadclin1')
 
+const getFiveClientsWhoSpentMost = () => {
+    let sql = `select clin.NOME, c.ID, sum(c.VALOR) as valor from conrec as c
+    join cabpedven as ca on ca.COD = c.CABPEDVEN_COD
+    join cadclin1 as clin on ca.CADCLIN1_COD = clin.COD
+    where c.RECEBIDO = 1
+    group by clin.NOME
+    order by valor desc
+    limit 5`
+    return pool.execute(sql)
+}
+
 module.exports = {
     saveClient,
     getClients,
-    findClientById
+    findClientById,
+    getFiveClientsWhoSpentMost
 }
