@@ -22,6 +22,8 @@ const client = require('./routes/client')
 const approve = require('./routes/approve')
 const reprove = require('./routes/reprove')
 const reports = require('./routes/reports')
+const auth = require('./routes/auth')
+const update = require('./routes/update')
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
@@ -51,6 +53,9 @@ app.use('/clients', client)
 app.use('/approve', approve)
 app.use('/reprove', reprove)
 app.use('/reports', reports)
+app.use('/check', auth)
+app.use('/update', update)
+app.use('/edit', update)
 app.use('/', home)
 app.use('*',(req, res) => {
     res.status(404)

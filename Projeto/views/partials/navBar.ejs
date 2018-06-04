@@ -70,7 +70,6 @@
               </ul>
           </li>
         <%} %>
-
           <% if('user' in locals && (locals.user.role.toUpperCase() === 'GERENTE') || (locals.user.role.toUpperCase() === 'FINANCEIRO')){%>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Vendas/Compras">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#financeiro_collapse" data-parent="#exampleAccordion">

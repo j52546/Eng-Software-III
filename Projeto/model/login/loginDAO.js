@@ -21,6 +21,8 @@ const doLogin = body => {
                     user: {
                         name: row[0].NOME,
                         role: row[0].ROLE,
+                        id: row[0].COD,
+                        email: row[0].EMAIL
                     },
                     message:'auth/ok'
                 }

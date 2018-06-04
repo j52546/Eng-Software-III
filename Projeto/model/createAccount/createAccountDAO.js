@@ -17,7 +17,19 @@ const createAccount = async body => {
         })
 }
 
+const verifyPassword = password => pool.execute('select * from caduser1 where password = ?', [md5(CONSTANTS.SECRET_KEYBOARD.concat(password))])
+const updateUser = async (user, id) => {
+    const sql = 'update caduser1 set nome = ?, email = ?, password = ? where COD = ?'
+    const connection = await pool.getConnection()
+    try {
+        return await connection.execute(sql, [user.name, user.email, md5(CONSTANTS.SECRET_KEYBOARD.concat(user.password)), id])
+    } catch (error) {
+        throw error
+    }
+}
 
 module.exports = {
-    createAccount
+    createAccount,
+    verifyPassword,
+    updateUser
 }
