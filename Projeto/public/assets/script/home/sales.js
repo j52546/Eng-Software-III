@@ -45,7 +45,7 @@ function moreInformation(context){
                         $('#table_items').DataTable().row.add([
                             item.COD,
                             item.NOME,
-                            item.PRECO.toFixed(2),
+                            item.PRECO_VENDA.toFixed(2),
                             item.QTD,
                             item.DESCR,
                             item.SALDO

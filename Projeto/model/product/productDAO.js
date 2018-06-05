@@ -73,9 +73,9 @@ function getDateVencimento() {
 }
 
 function saveNewProduct(produto) {
-    let sql = 'insert into cadprod1 (NOME, DESCR, SALDO, PRECO) values '
-    sql = sql.concat('(?,?,?,?)')
-    return pool.execute(sql, [produto.nome, produto.descricao, 0, produto.preco])
+    let sql = 'insert into cadprod1 (NOME, DESCR, SALDO, PRECO, PRECO_VENDA) values '
+    sql = sql.concat('(?,?,?,?,?)')
+    return pool.execute(sql, [produto.nome, produto.descricao, 0, produto.preco, parseFloat((produto.preco*1.3).toFixed(2))])
 }
 
 function getProductsEnter(){
@@ -97,7 +97,7 @@ function getProductsExit() {
 }
 
 function getReportsProduct(){
-    let sql = `select p.COD as codigo, p.NOME as nome, p.DESCR as descricao, p.PRECO as preco,
+    let sql = `select p.COD as codigo, p.NOME as nome, p.DESCR as descricao, p.PRECO as preco, p.PRECO_VENDA as preco_venda,
     p.SALDO as saldo, sum(i.QTD) as quantidade, sum(i.TOTAL) as renda_final from conrec as cn
    join cabpedven as c on c.COD = cn.CABPEDVEN_COD
    join itepedven as i on i.CABPED_COD = c.COD
@@ -108,7 +108,7 @@ function getReportsProduct(){
 }
 
 function getFiveProductsMoreSale(fieldOrder){
-    let sql = `select p.COD as codigo, p.NOME as nome, p.DESCR as descricao, p.PRECO as preco,
+    let sql = `select p.COD as codigo, p.NOME as nome, p.DESCR as descricao, p.PRECO_VENDA as preco,
     p.SALDO as saldo, sum(i.QTD) as quantidade, sum(i.TOTAL) as renda_final from conrec as cn
    join cabpedven as c on c.COD = cn.CABPEDVEN_COD
    join itepedven as i on i.CABPED_COD = c.COD

@@ -16,7 +16,8 @@
                   <th>Código</th>
                   <th>Nome</th>
                   <th>Descrição</th>
-                  <th>Preço</th>
+                  <th>Preço de compra</th>
+                  <th>Preço de venda</th>
                   <th>Saldo</th>
                   <th>Quantidade</th>
                   <th>Renda total</th>
@@ -27,7 +28,8 @@
                     <th>Código</th>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th>Preço</th>
+                    <th>Preço de compra</th>
+                    <th>Preço de venda</th>
                     <th>Saldo</th>
                     <th>Quantidade</th>
                     <th>Renda total</th>
@@ -41,6 +43,7 @@
                       <td><%= content.nome %></td>
                       <td><%= content.descricao %></td>
                       <td><%= content.preco.toFixed(2) %></td>
+                      <td><%= content.preco_venda.toFixed(2) %></td>
                       <td><%= content.saldo %></td>
                       <td><%= content.quantidade %></td>
                       <td><%= content.renda_final.toFixed(2) %></td>

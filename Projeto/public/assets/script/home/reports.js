@@ -30,7 +30,7 @@ function productsPDF(){
     const data = $('#dataTable').DataTable().rows().data()
     for(let i = 0; i < data.length; i++){
          if(i != $('#dataTable').DataTable().page.len()) {
-            rows.push(data[i])
+            rows.push(data[i].filter((v, index) => index!==3))
          } else break  
     }
     doc.autoTable(columns, rows, options)

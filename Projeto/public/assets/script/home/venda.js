@@ -179,7 +179,7 @@ function loadingProducts() {
                         value.COD,
                         value.NOME, 
                         value.SALDO,
-                        value.PRECO.toFixed(2),
+                        value.PRECO_VENDA.toFixed(2),
                         value.DESCR
                     ]).draw()
                 })

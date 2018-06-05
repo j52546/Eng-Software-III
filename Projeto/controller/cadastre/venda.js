@@ -38,7 +38,7 @@ const findClientAndProduct = (req, res) => {
                         id_prod: rowProduct.COD,
                         name_prod:rowProduct.NOME,
                         desc_prod:rowProduct.DESCR,
-                        preco_prod:rowProduct.PRECO.toFixed(2),
+                        preco_prod:rowProduct.PRECO_VENDA.toFixed(2),
                         qtd_prod: rowProduct.SALDO
                     })
                 } else res.send({prodNotFound:true})

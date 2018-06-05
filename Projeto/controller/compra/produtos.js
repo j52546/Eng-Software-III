@@ -1,6 +1,6 @@
 const CONSTANTS = require('../../util/CONSTANTS.JS')
 const userDAO = require('../../model/home/index')
-const users = new Array()
+let users = new Array()
 const productDAO = require('../../model/product/productDAO')
 
 const renderPage = (req, res) => {
@@ -14,6 +14,7 @@ const renderPage = (req, res) => {
             res.render('compra/produto')
         })
         .catch( err => {
+            console.log('ERROR: ', err)
             res.redirect('/')
         })       
     } else {
