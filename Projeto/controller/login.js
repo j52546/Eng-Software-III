@@ -5,6 +5,7 @@ const login = (req, res) => {
 }
 
 const doLogin = (req, res) => {
+    console.log('BODY = ', req.body)
     loginDAO.doLogin(req.body)
     .then( result => {
         console.log('RESULT = ', result)
