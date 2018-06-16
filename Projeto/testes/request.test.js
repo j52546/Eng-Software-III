@@ -28,6 +28,6 @@ describe('redirect page', ()=>{
     it('GET', (done) => {
         request(app)
         .get('/')
-        .expect(200, done)
+        .expect(302, done)
     })
 })
