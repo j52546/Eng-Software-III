@@ -43,7 +43,6 @@ const postPassword = (req, res) => {
                 res.locals.success = true
                 res.render('auth/forgotPassword')
             } else {
-                console.log('else, ')
                 res.locals.errorForgotAccount = true
                 res.render('auth/forgotPassword')
             }
@@ -60,7 +59,6 @@ const postPassword = (req, res) => {
 const recoverPasswordPage = (req, res) => {
     console.log(req.params.id)
     const id = new Buffer(req.params.id, 'base64').toString().replace(CONSTANTS.SECRET_ID, '')
-    console.log('id = ', id)
     forgotPasswordDAO.checkId(id)
     .then(result => {
         if(result && result[0].length > 0) {
