@@ -1,6 +1,6 @@
 const nodeMailer = require('nodemailer')
 const fs = require('fs')
-let html = fs.readFileSync(__dirname+'\\email.html').toString()
+let html = fs.readFileSync(__dirname+'/email.html').toString()
 const CONSTANTS = require('../util/CONSTANTS.JS')
 const forgotPasswordDAO = require('../model/forgotPassword/forgotPassword')
 const transporter = nodeMailer.createTransport({

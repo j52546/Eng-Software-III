@@ -7,6 +7,7 @@ router.use(function(req, res, next) {
     if('user' in req.session) {
         next()
     } else {
+        res.status(401)
         res.redirect('/login')
     }
 })

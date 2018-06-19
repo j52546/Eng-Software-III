@@ -26,6 +26,7 @@ const auth = require('./routes/auth')
 const update = require('./routes/update')
 
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 app.use(session({
     secret:'Trabalho Marcio',
     resave: false,
@@ -74,4 +75,5 @@ mysql.connection.then(() => {
     console.log('Error to start the database, error =  ', err)
 })
 
+module.exports = app
 
